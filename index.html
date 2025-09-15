@@ -128,9 +128,7 @@
     }
 
     .grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 18px;
+      display: block;
       margin-top: 18px
     }
 
@@ -322,10 +320,6 @@
         grid-template-columns: 1fr 440px
       }
 
-      .grid {
-        grid-template-columns: 2fr 1fr
-      }
-
       .columns {
         grid-template-columns: 1fr 1fr
       }
@@ -368,8 +362,8 @@
         </div>
       </div>
       <nav>
-        <a class="btn" href="#menu">Menu</a>
         <a class="btn" href="#events">Events</a>
+        <a class="btn" href="#menu">Menu</a>
         <a class="btn" href="#gallery">Gallery</a>
         <a class="btn" href="#contact">Contact</a>
       </nav>
@@ -385,36 +379,32 @@
       </section>
 
       <section class="grid">
-        <div>
-          <div id="menu" class="card">
-            <h2 style="margin-top: 0; color: var(--accent); font-size: 24px; margin-bottom: 12px;">Our Menu</h2>
-            <img src="menu1.jpg" alt="Burntloaf Café Menu" class="menu-image">
-          </div>
-
-          <div id="events" class="card" style="margin-top:14px">
-            <h2 style="margin-top: 0; color: var(--accent); font-size: 24px; margin-bottom: 16px;">Upcoming Events</h2>
-            <div class="event">
-              <div class="event-date">November 1, 2025</div>
-              <div class="event-title">Boston Bouldering Project - Boulderfest</div>
-              <div style="font-size: 14px; color: var(--muted); margin-bottom: 8px;">12A Tyler St, Somerville, MA 02143
-              </div>
-              <a href="https://boulderingproject.com/boulderfest-2025-boston/" target="_blank" class="event-link">Learn
-                more & register</a>
+        <div id="events" class="card">
+          <h2 style="margin-top: 0; color: var(--accent); font-size: 24px; margin-bottom: 16px;">Upcoming Events</h2>
+          <div class="event">
+            <div class="event-date">November 1, 2025</div>
+            <div class="event-title">Boston Bouldering Project - Boulderfest</div>
+            <div style="font-size: 14px; color: var(--muted); margin-bottom: 8px;">12A Tyler St, Somerville, MA 02143
             </div>
+            <a href="https://boulderingproject.com/boulderfest-2025-boston/" target="_blank" class="event-link">Learn
+              more & register</a>
           </div>
         </div>
 
-        <aside>
-          <div id="gallery" class="card">
-            <h2 style="margin-top: 0; color: var(--accent); font-size: 24px; margin-bottom: 16px;">Gallery</h2>
-            <p style="margin-bottom: 16px; color: var(--muted); font-size: 14px;">Follow us on Instagram for the latest
-              photos of our delicious bakes!</p>
-            <iframe src="https://www.instagram.com/burntloaf.cafe/embed" width="100%" height="400" frameborder="0"
-              scrolling="no" allowtransparency="true" class="instagram-embed"></iframe>
-            <a href="https://www.instagram.com/burntloaf.cafe" target="_blank" class="instagram-link">@burntloaf.cafe on
-              Instagram</a>
-          </div>
-        </aside>
+        <div id="menu" class="card" style="margin-top: 18px;">
+          <h2 style="margin-top: 0; color: var(--accent); font-size: 24px; margin-bottom: 12px;">Our Menu</h2>
+          <img src="menu1.jpg" alt="Burntloaf Café Menu" class="menu-image">
+        </div>
+
+        <div id="gallery" class="card" style="margin-top: 18px;">
+          <h2 style="margin-top: 0; color: var(--accent); font-size: 24px; margin-bottom: 16px;">Gallery</h2>
+          <p style="margin-bottom: 16px; color: var(--muted); font-size: 14px;">Follow us on Instagram for the latest
+            photos of our delicious bakes!</p>
+          <iframe src="https://www.instagram.com/burntloaf.cafe/embed" width="100%" height="400" frameborder="0"
+            scrolling="no" allowtransparency="true" class="instagram-embed"></iframe>
+          <a href="https://www.instagram.com/burntloaf.cafe" target="_blank" class="instagram-link">@burntloaf.cafe on
+            Instagram</a>
+        </div>
       </section>
     </main>
 
