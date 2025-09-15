@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -8,52 +9,166 @@
   <meta property="og:title" content="Burntloaf Café" />
   <meta property="og:description" content="Coffee, pastries, art socials, and a little loaf-cat magic." />
   <meta property="og:image" content="logo.png" />
+  <link rel="icon" type="image/png" href="logo.png" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --bg:#fffdf9;
-      --muted:#6b6b6b;
-      --accent:#f48c8c;
-      --accent-2:#fbc4ab;
-      --card:#ffffff;
-      --max-width:1000px;
-      --gap:18px;
-      --radius:20px;
+    :root {
+      --bg: #fffdf9;
+      --muted: #6b6b6b;
+      --accent: #f48c8c;
+      --accent-2: #fbc4ab;
+      --card: #ffffff;
+      --max-width: 1000px;
+      --gap: 18px;
+      --radius: 20px;
       font-family: 'Baloo 2', system-ui, sans-serif;
-      color:#3c3c3c;
+      color: #3c3c3c;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;background:var(--bg);}
-    a{color:inherit;text-decoration:none}
 
-    .wrap{max-width:var(--max-width);margin:20px auto;padding:16px;}
-    header{display:flex;align-items:center;justify-content:space-between;gap:12px}
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:72px;height:72px;border-radius:20px;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.08)}
-    .logo img{width:100%;height:100%;object-fit:contain}
-    .title{font-size:22px;font-weight:700;color:var(--accent)}
-    .tag{font-size:14px;color:var(--muted)}
+    * {
+      box-sizing: border-box
+    }
 
-    nav{display:flex;gap:14px;align-items:center}
-    .btn{padding:10px 16px;border-radius:16px;background:var(--accent);color:white;font-weight:600;box-shadow:0 4px 10px rgba(244,140,140,0.4)}
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      background: var(--bg);
+    }
 
-    .hero{display:grid;grid-template-columns:1fr;gap:18px;margin-top:20px;align-items:center}
-    .hero-card{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:0 6px 20px rgba(20,20,20,0.06)}
+    a {
+      color: inherit;
+      text-decoration: none
+    }
 
-    .grid{display:grid;grid-template-columns:1fr;gap:18px;margin-top:18px}
-    .columns{display:grid;grid-template-columns:1fr;gap:14px}
-    .card{background:var(--card);padding:18px;border-radius:20px;box-shadow:0 6px 18px rgba(20,20,20,0.05)}
+    .wrap {
+      max-width: var(--max-width);
+      margin: 20px auto;
+      padding: 16px;
+    }
 
-    footer{margin-top:22px;padding:18px;border-radius:20px;background:#fff0ed;display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px;color:#666}
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px
+    }
 
-    @media(min-width:720px){
-      .hero{grid-template-columns:1fr 440px}
-      .grid{grid-template-columns:2fr 1fr}
-      .columns{grid-template-columns:1fr 1fr}
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center
+    }
+
+    .logo {
+      width: 72px;
+      height: 72px;
+      border-radius: 20px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08)
+    }
+
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain
+    }
+
+    .title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent)
+    }
+
+    .tag {
+      font-size: 14px;
+      color: var(--muted)
+    }
+
+    nav {
+      display: flex;
+      gap: 14px;
+      align-items: center
+    }
+
+    .btn {
+      padding: 10px 16px;
+      border-radius: 16px;
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(244, 140, 140, 0.4)
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      margin-top: 20px;
+      align-items: center
+    }
+
+    .hero-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: 0 6px 20px rgba(20, 20, 20, 0.06)
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      margin-top: 18px
+    }
+
+    .columns {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px
+    }
+
+    .card {
+      background: var(--card);
+      padding: 18px;
+      border-radius: 20px;
+      box-shadow: 0 6px 18px rgba(20, 20, 20, 0.05)
+    }
+
+    footer {
+      margin-top: 22px;
+      padding: 18px;
+      border-radius: 20px;
+      background: #fff0ed;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: #666
+    }
+
+    @media(min-width:720px) {
+      .hero {
+        grid-template-columns: 1fr 440px
+      }
+
+      .grid {
+        grid-template-columns: 2fr 1fr
+      }
+
+      .columns {
+        grid-template-columns: 1fr 1fr
+      }
     }
   </style>
 </head>
+
 <body>
   <div class="wrap">
     <header>
@@ -102,4 +217,5 @@
     </footer>
   </div>
 </body>
+
 </html>
