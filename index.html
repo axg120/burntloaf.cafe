@@ -7,9 +7,12 @@
   <title>Burntloaf Café</title>
   <meta name="description" content="Burntloaf — Cute café with coffee, pastries, and cozy community vibes." />
   <meta property="og:title" content="Burntloaf Café" />
-  <meta property="og:description" content="Coffee, pastries, art socials, and a little loaf-cat magic." />
+  <meta property="og:description" content="Coffee, pastries, art socials." />
   <meta property="og:image" content="logo.png" />
-  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="logo.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="logo.png" />
+  <link rel="icon" type="image/png" sizes="48x48" href="logo.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="logo.png" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
@@ -64,8 +67,8 @@
     }
 
     .logo {
-      width: 72px;
-      height: 72px;
+      width: 84px;
+      height: 84px;
       border-radius: 20px;
       background: #fff;
       display: flex;
@@ -153,18 +156,115 @@
       display: block;
     }
 
+    .contact-form {
+      margin-top: 22px;
+      padding: 24px;
+      border-radius: 20px;
+      background: var(--card);
+      box-shadow: 0 6px 18px rgba(20, 20, 20, 0.05);
+    }
+
+    .contact-form h2 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      color: var(--accent);
+      font-size: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #3c3c3c;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #f0f0f0;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 14px;
+      transition: border-color 0.2s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .submit-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 16px;
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(244, 140, 140, 0.4);
+      transition: transform 0.2s ease;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .event {
+      padding: 16px;
+      border-radius: 12px;
+      background: #fafafa;
+      margin-bottom: 12px;
+    }
+
+    .event:last-child {
+      margin-bottom: 0;
+    }
+
+    .event-date {
+      font-size: 14px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .event-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #3c3c3c;
+    }
+
+    .event-link {
+      color: var(--accent);
+      text-decoration: underline;
+      font-size: 14px;
+    }
+
+    .event-link:hover {
+      color: #e67e7e;
+    }
+
     footer {
       margin-top: 22px;
       padding: 18px;
       border-radius: 20px;
       background: #fff0ed;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
+      text-align: center;
       font-size: 14px;
       color: #666;
-      flex-wrap: wrap;
     }
 
     @media (max-width: 480px) {
@@ -219,6 +319,21 @@
       }
     }
   </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('contactForm');
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const subject = document.getElementById('subject').value;
+        const message = document.getElementById('message').value;
+
+        const mailtoLink = `mailto:burntloafcafe@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+
+        window.location.href = mailtoLink;
+      });
+    });
+  </script>
 </head>
 
 <body>
@@ -235,13 +350,16 @@
         <a class="btn" href="#menu">Menu</a>
         <a class="btn" href="#events">Events</a>
         <a class="btn" href="#gallery">Gallery</a>
+        <a class="btn" href="#contact">Contact</a>
       </nav>
     </header>
 
     <main>
       <section class="hero">
         <div class="hero-card">
-          in progress
+          <p style="font-size: 18px; margin-bottom: 16px; color: #3c3c3c;">📍 Somerville (Boston)</p>
+          <p style="font-size: 16px; margin-bottom: 16px; color: var(--muted);">Home bakery and pop up cafés</p>
+          <p style="font-size: 16px; margin-bottom: 20px; color: #3c3c3c;">🥐 Salt bread, cookies, coffee</p>
         </div>
       </section>
 
@@ -253,7 +371,15 @@
           </div>
 
           <div id="events" class="card" style="margin-top:14px">
-            in progress
+            <h2 style="margin-top: 0; color: var(--accent); font-size: 24px; margin-bottom: 16px;">Upcoming Events</h2>
+            <div class="event">
+              <div class="event-date">November 1, 2025</div>
+              <div class="event-title">Boston Bouldering Project - Boulderfest</div>
+              <div style="font-size: 14px; color: var(--muted); margin-bottom: 8px;">12A Tyler St, Somerville, MA 02143
+              </div>
+              <a href="https://boulderingproject.com/boulderfest-2025-boston/" target="_blank" class="event-link">Learn
+                more & register</a>
+            </div>
           </div>
         </div>
 
@@ -265,8 +391,23 @@
       </section>
     </main>
 
+    <section id="contact" class="contact-form">
+      <h2>Get in Touch</h2>
+      <form id="contactForm">
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" name="subject" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Send Message</button>
+      </form>
+    </section>
+
     <footer>
-      in progress
+      © 2025 Burntloaf Café
     </footer>
   </div>
 </body>
