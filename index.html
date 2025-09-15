@@ -257,6 +257,27 @@
       color: #e67e7e;
     }
 
+    .instagram-embed {
+      width: 100%;
+      max-width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 0;
+    }
+
+    .instagram-link {
+      display: inline-block;
+      margin-top: 12px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .instagram-link:hover {
+      text-decoration: underline;
+    }
+
     footer {
       margin-top: 22px;
       padding: 18px;
@@ -385,7 +406,13 @@
 
         <aside>
           <div id="gallery" class="card">
-            in progress
+            <h2 style="margin-top: 0; color: var(--accent); font-size: 24px; margin-bottom: 16px;">Gallery</h2>
+            <p style="margin-bottom: 16px; color: var(--muted); font-size: 14px;">Follow us on Instagram for the latest
+              photos of our delicious bakes!</p>
+            <iframe src="https://www.instagram.com/burntloaf.cafe/embed" width="100%" height="400" frameborder="0"
+              scrolling="no" allowtransparency="true" class="instagram-embed"></iframe>
+            <a href="https://www.instagram.com/burntloaf.cafe" target="_blank" class="instagram-link">@burntloaf.cafe on
+              Instagram</a>
           </div>
         </aside>
       </section>
