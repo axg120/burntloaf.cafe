@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Merch - Burntloaf Café</title>
+  <meta name="description" content="Burntloaf merchandise collection" />
+  <meta property="og:title" content="Merch - Burntloaf Café" />
+  <meta property="og:description" content="Burntloaf merchandise collection" />
+  <meta property="og:image" content="../assets/logo.png" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HLYX6T2RTQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-HLYX6T2RTQ');
+  </script>
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/icon.jpg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/icon.jpg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="../assets/icon.jpg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/icon.jpg" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/shared.css">
+  <link rel="stylesheet" href="../css/merch.css">
+  <script type="text/javascript" src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <a href="../" class="brand">
+        <div class="logo"><img src="../assets/logo.png" alt="Burntloaf logo"></div>
+        <div>
+          <div class="title">Burntloaf Café</div>
+          <div class="tag"></div>
+        </div>
+      </a>
+      <nav>
+        <a class="btn" href=".">Merch</a>
+        <a class="btn" href="../#events">Events</a>
+        <a class="btn" href="../#socials">Socials</a>
+        <a class="btn" href="../#menu">Catering</a>
+        <a class="btn" href="../#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="card">
+
+        <h2 style="margin-top: 0; color: var(--accent); font-size: 24px; margin-bottom: 16px;">Merch (ordering available
+          starting Jan 2026)</h2>
+
+        <div class="merch-gallery" id="merch-gallery"></div>
+
+      </div>
+    </main>
+
+    <footer>
+      © 2025 Burntloaf Café
+    </footer>
+  </div>
+
+  <!-- Cart Icon -->
+  <div class="cart-icon" id="cart-toggle">
+    🛒
+    <span class="cart-badge" id="cart-count" style="display: none;">0</span>
+  </div>
+
+  <!-- Cart Panel -->
+  <div class="cart-panel" id="cart-panel">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button class="cart-close" id="cart-close">×</button>
+    </div>
+    <div class="cart-items" id="cart-items"></div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total:</span>
+        <span id="cart-total">$0.00</span>
+      </div>
+      <button class="cart-checkout" onclick="openCheckout()">Checkout</button>
+    </div>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div class="checkout-modal" id="checkout-modal">
+    <div class="checkout-content">
+      <div class="checkout-header">
+        <h3>Checkout</h3>
+        <button class="checkout-close" onclick="closeCheckout()">×</button>
+      </div>
+
+      <div class="checkout-summary">
+        <div id="checkout-items"></div>
+        <div class="checkout-summary-total">
+          <span>Total:</span>
+          <span id="checkout-total">$0.00</span>
+        </div>
+      </div>
+
+      <form id="customer-form" style="margin-bottom: 20px;">
+        <h4 style="margin: 0 0 12px 0; color: #3c3c3c;">Shipping Information</h4>
+        <input type="text" id="customer-name" placeholder="Full Name" required
+          style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Baloo 2', sans-serif;">
+        <input type="email" id="customer-email" placeholder="Email" required
+          style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Baloo 2', sans-serif;">
+        <input type="tel" id="customer-phone" placeholder="Phone Number" required
+          style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Baloo 2', sans-serif;">
+        <div style="position: relative; width: 100%; margin-bottom: 10px;">
+          <input type="text" id="customer-address" placeholder="Street Address" required autocomplete="off"
+            style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Baloo 2', sans-serif;">
+          <div id="address-dropdown" style="display: none; position: absolute; width: 100%; background: white; border: 1px solid #ddd; border-radius: 8px; margin-top: 4px; max-height: 300px; overflow-y: auto; z-index: 1000;"></div>
+        </div>
+        <input type="text" id="customer-address2" placeholder="Apartment, suite, etc. (optional)"
+          style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Baloo 2', sans-serif;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+          <input type="text" id="customer-city" placeholder="City" required
+            style="padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Baloo 2', sans-serif;">
+          <select id="customer-state" required
+            style="padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Baloo 2', sans-serif; background-color: white; color: #333;">
+            <option value="" style="color: #999;">State</option>
+            <option value="AL">AL</option>
+            <option value="AK">AK</option>
+            <option value="AZ">AZ</option>
+            <option value="AR">AR</option>
+            <option value="CA">CA</option>
+            <option value="CO">CO</option>
+            <option value="CT">CT</option>
+            <option value="DE">DE</option>
+            <option value="FL">FL</option>
+            <option value="GA">GA</option>
+            <option value="HI">HI</option>
+            <option value="ID">ID</option>
+            <option value="IL">IL</option>
+            <option value="IN">IN</option>
+            <option value="IA">IA</option>
+            <option value="KS">KS</option>
+            <option value="KY">KY</option>
+            <option value="LA">LA</option>
+            <option value="ME">ME</option>
+            <option value="MD">MD</option>
+            <option value="MA">MA</option>
+            <option value="MI">MI</option>
+            <option value="MN">MN</option>
+            <option value="MS">MS</option>
+            <option value="MO">MO</option>
+            <option value="MT">MT</option>
+            <option value="NE">NE</option>
+            <option value="NV">NV</option>
+            <option value="NH">NH</option>
+            <option value="NJ">NJ</option>
+            <option value="NM">NM</option>
+            <option value="NY">NY</option>
+            <option value="NC">NC</option>
+            <option value="ND">ND</option>
+            <option value="OH">OH</option>
+            <option value="OK">OK</option>
+            <option value="OR">OR</option>
+            <option value="PA">PA</option>
+            <option value="RI">RI</option>
+            <option value="SC">SC</option>
+            <option value="SD">SD</option>
+            <option value="TN">TN</option>
+            <option value="TX">TX</option>
+            <option value="UT">UT</option>
+            <option value="VT">VT</option>
+            <option value="VA">VA</option>
+            <option value="WA">WA</option>
+            <option value="WV">WV</option>
+            <option value="WI">WI</option>
+            <option value="WY">WY</option>
+          </select>
+          <input type="text" id="customer-zip" placeholder="ZIP Code" required
+            style="padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Baloo 2', sans-serif; background-color: white; color: #333;">
+        </div>
+      </form>
+
+      <form id="payment-form">
+        <h4 style="margin: 0 0 12px 0; color: #3c3c3c;">Payment Method</h4>
+        <div id="apple-pay-container"></div>
+        <div id="google-pay-container"></div>
+        <div id="card-divider" style="text-align: center; margin: 16px 0; color: #999; font-size: 14px; display: none;">
+          or pay with card</div>
+        <div id="card-container"></div>
+        <button id="card-button" type="button">Pay Now</button>
+        <div style="text-align: center; margin-top: 16px; padding-top: 16px; border-top: 1px solid #eee;">
+          <img src="https://squareup.com/images/brand/downloads/sq-logo-black.png" alt="Powered by Square"
+            style="height: 24px; opacity: 0.6;">
+        </div>
+      </form>
+
+      <div id="payment-status-container"></div>
+    </div>
+  </div>
+
+  <script type="module"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKlh2LyxLjbGfzkaC8bdezwTL6lz5O2FI&libraries=places&v=weekly"></script>
+  <script src="../js/config.js"></script>
+  <script src="../js/merch.js"></script>
+</body>
+
+</html>

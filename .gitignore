@@ -1,3 +1,5 @@
-.DS_Store
-backend
 node_modules
+*.bak
+*.backup
+*.DS_Store
+backend
