@@ -102,6 +102,42 @@ function showDropdown(predictions) {
 
 let autocomplete;
 
+// State tax rates (simplified - in reality you'd want more comprehensive data)
+const stateTaxRates = {
+  'AL': 0.04, 'AK': 0.00, 'AZ': 0.056, 'AR': 0.065, 'CA': 0.0725, 'CO': 0.029, 'CT': 0.0635, 'DE': 0.00, 'FL': 0.06, 'GA': 0.04,
+  'HI': 0.04, 'ID': 0.06, 'IL': 0.0625, 'IN': 0.07, 'IA': 0.06, 'KS': 0.065, 'KY': 0.06, 'LA': 0.0445, 'ME': 0.055, 'MD': 0.06,
+  'MA': 0.0625, 'MI': 0.06, 'MN': 0.06875, 'MS': 0.07, 'MO': 0.04225, 'MT': 0.00, 'NE': 0.055, 'NV': 0.0685, 'NH': 0.00, 'NJ': 0.06625,
+  'NM': 0.05125, 'NY': 0.08, 'NC': 0.0475, 'ND': 0.05, 'OH': 0.0575, 'OK': 0.045, 'OR': 0.00, 'PA': 0.06, 'RI': 0.07, 'SC': 0.06,
+  'SD': 0.045, 'TN': 0.07, 'TX': 0.0625, 'UT': 0.0485, 'VT': 0.06, 'VA': 0.053, 'WA': 0.065, 'WV': 0.06, 'WI': 0.05, 'WY': 0.04
+};
+
+function getTaxRate(state) {
+  return stateTaxRates[state] || 0;
+}
+
+function updateOrderSummary() {
+  const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const shipping = 1.00;
+  const total = subtotal + shipping;
+
+  // Update checkout items
+  const itemsHtml = cart.map(item => `
+    <div class="checkout-summary-item">
+      <span>${item.name} x${item.quantity}</span>
+      <span>$${(item.price * item.quantity).toFixed(2)}</span>
+    </div>
+  `).join('') + `
+    <div style="border-top: 1px solid #ddd; margin: 8px 0;"></div>
+    <div class="checkout-summary-item">
+      <span>Shipping</span>
+      <span>$${shipping.toFixed(2)}</span>
+    </div>
+  `;
+  
+  document.getElementById('checkout-items').innerHTML = itemsHtml;
+  document.getElementById('checkout-total').textContent = `$${total.toFixed(2)}`;
+}
+
 const products = [
   { id: '1', image: '../merch/sticker_1.JPG', name: 'Corgi Loaf Sticker', price: 4, category: 'sticker' },
   { id: '25', image: '../merch/sticker_25.JPG', name: 'Black Cat Loaf Sticker', price: 4, category: 'sticker' },
@@ -275,11 +311,11 @@ function removeFromCart(productId) {
 
 function updateCart() {
   const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
   document.getElementById('cart-count').textContent = count;
   document.getElementById('cart-count').style.display = count > 0 ? 'flex' : 'none';
-  document.getElementById('cart-total').textContent = `$${total.toFixed(2)}`;
+  document.getElementById('cart-total').textContent = `$${subtotal.toFixed(2)}`;
 
   const cartItems = document.getElementById('cart-items');
   if (cart.length === 0) {
@@ -388,7 +424,12 @@ function showCardDivider() {
 
 // Build payment request for Apple/Google Pay
 function buildPaymentRequest() {
-  const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const shipping = 1.00;
+  const state = document.getElementById('customer-state').value;
+  const taxRate = getTaxRate(state);
+  const tax = (subtotal + shipping) * taxRate;
+  const total = subtotal + shipping + tax;
 
   return {
     countryCode: 'US',
@@ -407,18 +448,10 @@ function openCheckout() {
     return;
   }
 
-  const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-
-  // Update checkout summary
-  document.getElementById('checkout-items').innerHTML = cart.map(item => `
-    <div class="checkout-summary-item">
-      <span>${item.name} x${item.quantity}</span>
-      <span>$${(item.price * item.quantity).toFixed(2)}</span>
-    </div>
-  `).join('');
-
-  document.getElementById('checkout-total').textContent = `$${total.toFixed(2)}`;
   document.getElementById('checkout-modal').classList.add('open');
+  
+  // Update order summary
+  updateOrderSummary();
 
   // Initialize Square if not already done
   if (!payments) {
@@ -544,7 +577,12 @@ async function handlePayment(paymentMethod) {
 
 // Process Payment (send to your server)
 async function processPayment(token) {
-  const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const shipping = 1.00;
+  const state = document.getElementById('customer-state').value;
+  const taxRate = getTaxRate(state);
+  const tax = (subtotal + shipping) * taxRate;
+  const total = subtotal + shipping + tax;
   const amountInCents = Math.round(total * 100);
   const customerInfo = validateCustomerForm().data;
 
@@ -652,6 +690,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Address autocomplete
   const addressInput = document.getElementById('customer-address');
   const dropdown = document.getElementById('address-dropdown');
+  const stateSelect = document.getElementById('customer-state');
 
   addressInput.addEventListener('input', (e) => {
     clearTimeout(debounceTimer);
@@ -668,6 +707,9 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     }, 300);
   });
+
+  // Update order summary when state changes
+  stateSelect.addEventListener('change', updateOrderSummary);
 
   document.addEventListener('click', (e) => {
     if (!addressInput.contains(e.target) && !dropdown.contains(e.target)) {

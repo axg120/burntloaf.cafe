@@ -92,14 +92,6 @@
         <button class="checkout-close" onclick="closeCheckout()">×</button>
       </div>
 
-      <div class="checkout-summary">
-        <div id="checkout-items"></div>
-        <div class="checkout-summary-total">
-          <span>Total:</span>
-          <span id="checkout-total">$0.00</span>
-        </div>
-      </div>
-
       <form id="customer-form" style="margin-bottom: 20px;">
         <h4 style="margin: 0 0 12px 0; color: #3c3c3c;">Shipping Information</h4>
         <input type="text" id="customer-name" placeholder="Full Name" required
@@ -184,6 +176,15 @@
         <div id="card-divider" style="text-align: center; margin: 16px 0; color: #999; font-size: 14px; display: none;">
           or pay with card</div>
         <div id="card-container"></div>
+        
+        <div class="checkout-summary">
+          <div id="checkout-items"></div>
+          <div class="checkout-summary-total">
+            <span>Total:</span>
+            <span id="checkout-total">$0.00</span>
+          </div>
+        </div>
+        
         <button id="card-button" type="button">Pay Now</button>
         <div style="text-align: center; margin-top: 16px; padding-top: 16px; border-top: 1px solid #eee;">
           <img src="https://squareup.com/images/brand/downloads/sq-logo-black.png" alt="Powered by Square"
