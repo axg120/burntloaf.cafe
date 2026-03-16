@@ -3,7 +3,7 @@ const SQUARE_APPLICATION_ID = 'sandbox-sq0idb-J0Bx6tfRFEyaaAKmiwHmuQ'; // Replac
 const SQUARE_LOCATION_ID = 'LK60F9JJD2Y34'; // Replace with your Square Location ID
 
 // Store Configuration
-const STORE_DISABLED = false; // Set to true to disable all "Add to Cart" buttons
+const STORE_DISABLED = true; // Set to true to disable all "Add to Cart" buttons
 
 let payments;
 let card;
