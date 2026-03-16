@@ -3,7 +3,7 @@ const SQUARE_APPLICATION_ID = 'sandbox-sq0idb-J0Bx6tfRFEyaaAKmiwHmuQ'; // Replac
 const SQUARE_LOCATION_ID = 'LK60F9JJD2Y34'; // Replace with your Square Location ID
 
 // Store Configuration
-const STORE_DISABLED = true; // Set to true to disable all "Add to Cart" buttons
+const STORE_DISABLED = false; // Set to true to disable all "Add to Cart" buttons
 
 let payments;
 let card;
@@ -115,27 +115,111 @@ function getTaxRate(state) {
   return stateTaxRates[state] || 0;
 }
 
-function updateOrderSummary() {
+async function updateOrderSummary() {
   const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const shipping = 1.00;
-  const total = subtotal + shipping;
-
+  const isStickersOnly = cart.every(item => item.category === 'sticker');
+  
   // Update checkout items
-  const itemsHtml = cart.map(item => `
-    <div class="checkout-summary-item">
-      <span>${item.name} x${item.quantity}</span>
-      <span>$${(item.price * item.quantity).toFixed(2)}</span>
-    </div>
-  `).join('') + `
+  const itemsHtml = cart.map(item => {
+    const itemImage = item.image || (item.images ? item.images[0] : '');
+    const imageUrl = itemImage ? `../${itemImage}` : '';
+    return `
+      <div class="checkout-summary-item" style="align-items: center;">
+        <div style="display: flex; align-items: center; flex: 1;">
+          <img src="${imageUrl}" alt="${item.name}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px; margin-right: 12px;">
+          <span>${item.name} x${item.quantity}</span>
+        </div>
+        <span>$${(item.price * item.quantity).toFixed(2)}</span>
+      </div>
+    `;
+  }).join('') + `
     <div style="border-top: 1px solid #ddd; margin: 8px 0;"></div>
     <div class="checkout-summary-item">
       <span>Shipping</span>
-      <span>$${shipping.toFixed(2)}</span>
+      <span id="selected-shipping-price">$0.00</span>
     </div>
   `;
   
   document.getElementById('checkout-items').innerHTML = itemsHtml;
+  await updateShippingOptions(isStickersOnly);
+  updateTotal();
+}
+
+async function updateShippingOptions(isStickersOnly) {
+  const state = document.getElementById('customer-state').value;
+  const zip = document.getElementById('customer-zip').value;
+  const shippingOptionsContainer = document.getElementById('shipping-options');
+  
+  if (!state || !zip) {
+    shippingOptionsContainer.innerHTML = '<div style="color: #999;">Enter address for shipping rates</div>';
+    return;
+  }
+  
+  let optionsHtml = '';
+  
+  if (isStickersOnly) {
+    optionsHtml += `
+      <div class="shipping-option" data-value="1.00" style="display: flex; justify-content: space-between; align-items: center; padding: 8px; border: 2px solid #007bff; border-radius: 4px; margin-bottom: 8px; cursor: pointer; background: #f8f9ff;">
+        <label style="display: flex; align-items: center; cursor: pointer;"><input type="radio" name="shipping" value="1.00" checked style="margin-right: 8px;"> USPS First Class Mail</label>
+        <span>$1.00</span>
+      </div>
+    `;
+  }
+  
+  // Economy shipping option
+  const checked = !isStickersOnly ? 'checked' : '';
+  const selectedStyle = !isStickersOnly ? 'border: 2px solid #007bff; background: #f8f9ff;' : 'border: 1px solid #ddd; background: white;';
+  optionsHtml += `
+    <div class="shipping-option" data-value="5.00" style="display: flex; justify-content: space-between; align-items: center; padding: 8px; ${selectedStyle} border-radius: 4px; margin-bottom: 8px; cursor: pointer;">
+      <label style="display: flex; align-items: center; cursor: pointer;"><input type="radio" name="shipping" value="5.00" ${checked} style="margin-right: 8px;"> Economy</label>
+      <span>$5.00</span>
+    </div>
+  `;
+  
+  shippingOptionsContainer.innerHTML = optionsHtml;
+  
+  // Add click handlers for shipping options
+  document.querySelectorAll('.shipping-option').forEach(option => {
+    option.addEventListener('click', () => {
+      const radio = option.querySelector('input[type="radio"]');
+      radio.checked = true;
+      
+      // Update styling
+      document.querySelectorAll('.shipping-option').forEach(opt => {
+        opt.style.border = '1px solid #ddd';
+        opt.style.background = 'white';
+      });
+      option.style.border = '2px solid #007bff';
+      option.style.background = '#f8f9ff';
+      
+      updateTotal();
+    });
+  });
+}
+
+function updateTotal() {
+  const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const selectedShipping = document.querySelector('input[name="shipping"]:checked');
+  const shipping = selectedShipping ? parseFloat(selectedShipping.value) : 0;
+  const total = subtotal + shipping;
+  
   document.getElementById('checkout-total').textContent = `$${total.toFixed(2)}`;
+  const shippingPriceElement = document.getElementById('selected-shipping-price');
+  if (shippingPriceElement) {
+    shippingPriceElement.textContent = `$${shipping.toFixed(2)}`;
+  }
+  
+  // Update shipping option styling
+  document.querySelectorAll('.shipping-option').forEach(option => {
+    const radio = option.querySelector('input[type="radio"]');
+    if (radio && radio.checked) {
+      option.style.border = '2px solid #007bff';
+      option.style.background = '#f8f9ff';
+    } else {
+      option.style.border = '1px solid #ddd';
+      option.style.background = 'white';
+    }
+  });
 }
 
 const products = [
@@ -578,11 +662,10 @@ async function handlePayment(paymentMethod) {
 // Process Payment (send to your server)
 async function processPayment(token) {
   const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const shipping = 1.00;
-  const state = document.getElementById('customer-state').value;
-  const taxRate = getTaxRate(state);
-  const tax = (subtotal + shipping) * taxRate;
-  const total = subtotal + shipping + tax;
+  const selectedShipping = document.querySelector('input[name="shipping"]:checked');
+  const shipping = selectedShipping ? parseFloat(selectedShipping.value) : 0;
+  const shippingMethod = selectedShipping ? selectedShipping.nextSibling.textContent.trim() : 'Standard';
+  const total = subtotal + shipping;
   const amountInCents = Math.round(total * 100);
   const customerInfo = validateCustomerForm().data;
 
@@ -594,7 +677,11 @@ async function processPayment(token) {
     },
     idempotencyKey: generateIdempotencyKey(),
     cart: cart,
-    customer: customerInfo
+    customer: customerInfo,
+    shipping: {
+      method: shippingMethod,
+      cost: shipping
+    }
   };
 
   // Try tunnel URL first, fallback to localhost
@@ -708,8 +795,28 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 300);
   });
 
-  // Update order summary when state changes
+  // Update order summary when state or zip changes
   stateSelect.addEventListener('change', updateOrderSummary);
+  document.getElementById('customer-zip').addEventListener('input', debounce(updateOrderSummary, 500));
+  
+  // Update total when shipping option changes
+  document.addEventListener('change', (e) => {
+    if (e.target.name === 'shipping') {
+      updateTotal();
+    }
+  });
+
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
 
   document.addEventListener('click', (e) => {
     if (!addressInput.contains(e.target) && !dropdown.contains(e.target)) {

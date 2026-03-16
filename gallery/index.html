@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Gallery - Burntloaf Café</title>
+  <meta name="description" content="Burntloaf Café - Gallery of menus and event images" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/icon.jpg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/icon.jpg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="../assets/icon.jpg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/icon.jpg" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/shared.css">
+  <link rel="stylesheet" href="../css/gallery.css">
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <a href=".." class="brand">
+        <div class="logo"><img src="../assets/logo.png" alt="Burntloaf logo"></div>
+        <div>
+          <div class="title">Burntloaf Café</div>
+          <div class="tag"></div>
+        </div>
+      </a>
+      <nav>
+        <a class="btn" href="../merch/">Merch</a>
+        <a class="btn" href="../#popups">Pop-ups</a>
+        <a class="btn" href="./">Gallery</a>
+        <a class="btn" href="../#socials">Socials</a>
+        <a class="btn" href="../#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="gallery-container">
+        <h1>Gallery</h1>
+        <div class="gallery-grid">
+          <div class="gallery-item" onclick="openLightbox('lululemon_event1.jpeg', 'Lululemon Event Menu')">
+            <img src="lululemon_event1.jpeg" alt="Lululemon Menu 1">
+            <p class="image-caption">@amigasenboston Menu</p>
+          </div>
+          <div class="gallery-item" onclick="openLightbox('bakeclub_event1.jpeg', 'Bakeclub Event Menu')">
+            <img src="bakeclub_event1.jpeg" alt="Bakeclub Event Menu">
+            <p class="image-caption">@bakeclubboston Menu</p>
+          </div>
+          <div class="gallery-item" onclick="openLightbox('boulder_menu.png', 'Boulderfest Drinks Menu')">
+            <img src="boulder_menu.png" alt="Boulderfest Drinks Menu">
+            <p class="image-caption">Boulderfest Drinks Menu</p>
+          </div>
+          <div class="gallery-item" onclick="openLightbox('food_menu.png', 'Boulderfest Food Menu')">
+            <img src="food_menu.png" alt="Boulderfest Food Menu">
+            <p class="image-caption">Boulderfest Food Menu</p>
+          </div>
+          <div class="gallery-item" onclick="openLightbox('menu1.png', 'Catering Menu')">
+            <img src="menu1.png" alt="Catering Menu">
+            <p class="image-caption">Catering Menu</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
+      <div class="lightbox-content" onclick="event.stopPropagation()">
+        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+        <img id="lightbox-image" class="lightbox-image" src="" alt="">
+        <p id="lightbox-caption" class="lightbox-caption"></p>
+      </div>
+    </div>
+
+    <script>
+      function openLightbox(src, caption) {
+        const lightbox = document.getElementById('lightbox');
+        const image = document.getElementById('lightbox-image');
+        const captionEl = document.getElementById('lightbox-caption');
+        image.src = src;
+        captionEl.textContent = caption;
+        lightbox.classList.add('active');
+        const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+        document.body.style.overflow = 'hidden';
+        document.body.style.paddingRight = scrollbarWidth + 'px';
+      }
+
+      function closeLightbox(event) {
+        const lightbox = document.getElementById('lightbox');
+        lightbox.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        document.body.style.paddingRight = '0';
+      }
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeLightbox();
+        }
+      });
+    </script>
+
+    <footer>
+      © 2026 Burntloaf Café
+    </footer>
+  </div>
+</body>
+
+</html>
