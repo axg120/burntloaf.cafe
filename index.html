@@ -59,26 +59,42 @@
         <div id="popups" class="card">
           <h2 style="margin-top: 0; color: var(--accent); font-size: 24px; margin-bottom: 16px;">Pop-ups</h2>
           <div class="event">
-            <div class="event-date">March 7, 2026</div>
-            <div class="event-title">Pilates & Lattes by @amigasenboston</div>
-            <div style="font-size: 14px; color: var(--muted); margin-bottom: 8px;">Pilates and coffee at Lululemon on Newbury St
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <div class="event-text">
+                <div class="event-date">March 7, 2026</div>
+                <div class="event-title">Pilates & Lattes by @amigasenboston</div>
+                <div style="font-size: 14px; color: var(--muted); margin-bottom: 8px;">Pilates and coffee at Lululemon on Newbury St
+                </div>
+              </div>
+              <img src="gallery/lululemon_event1.jpeg" alt="Pilates & Lattes" class="event-thumbnail" onclick="openEventLightbox('gallery/lululemon_event1.jpeg', 'Pilates & Lattes')" style="cursor: pointer;">
             </div>
           </div>
 
           <div class="event">
-            <div class="event-date">February 21, 2026</div>
-            <div class="event-title">Cupid's Cafe by @bakeclubboston</div>
-            <div style="font-size: 14px; color: var(--muted); margin-bottom: 8px;">Valentine's themed bake swap
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <div class="event-text">
+                <div class="event-date">February 21, 2026</div>
+                <div class="event-title">Cupid's Cafe by @bakeclubboston</div>
+                <div style="font-size: 14px; color: var(--muted); margin-bottom: 8px;">Valentine's themed bake swap
+                </div>
+              </div>
+              <img src="gallery/bakeclub_event1.jpeg" alt="Cupid's Cafe" class="event-thumbnail" onclick="openEventLightbox('gallery/bakeclub_event1.jpeg', 'Cupid\'s Cafe')" style="cursor: pointer;">
             </div>
           </div>
 
           <div class="event">
-            <div class="event-date">November 1, 2025</div>
-            <div class="event-title">Boston Bouldering Project - Boulderfest</div>
-            <div style="font-size: 14px; color: var(--muted); margin-bottom: 8px;">Bouldering Project's premier annual bouldering competition
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <div class="event-text">
+                <div class="event-date">November 1, 2025</div>
+                <div class="event-title">Boston Bouldering Project - Boulderfest</div>
+                <div style="font-size: 14px; color: var(--muted); margin-bottom: 8px;">Bouldering Project's premier annual bouldering competition
+                </div>
+                <a href="https://boulderingproject.com/boulderfest-2025-boston/" target="_blank" class="event-link">Learn
+                  more</a>
+              </div>
+              <img src="gallery/boulder_menu.png" alt="Boulderfest" class="event-thumbnail" onclick="openEventLightbox('gallery/boulder_menu.png', 'Boulderfest')" style="cursor: pointer;">
+              <img src="gallery/food_menu.png" alt="Boulderfest" class="event-thumbnail" onclick="openEventLightbox('gallery/food_menu.png', 'Boulderfest')" style="cursor: pointer;">
             </div>
-            <a href="https://boulderingproject.com/boulderfest-2025-boston/" target="_blank" class="event-link">Learn
-              more</a>
           </div>
         </div>
 
@@ -114,6 +130,45 @@
       © 2026 Burntloaf Café
     </footer>
   </div>
+
+  <div id="event-lightbox" class="event-lightbox" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.3); z-index: 99999; align-items: center; justify-content: center; padding: 20px;">
+    <div class="event-lightbox-content" style="position: relative; z-index: 100000;">
+      <button class="event-lightbox-close" onclick="closeEventLightbox()" style="position: absolute; top: 10px; right: 10px; color: white; font-size: 32px; cursor: pointer; background: rgba(0, 0, 0, 0.5); border: none; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 100001;">&times;</button>
+      <img id="event-lightbox-image" class="event-lightbox-image" src="" alt="" style="max-width: 90vw; max-height: 90vh; object-fit: contain; display: block; border-radius: 8px;">
+    </div>
+  </div>
+
+  <script>
+    function openEventLightbox(src, caption) {
+      const lightbox = document.getElementById('event-lightbox');
+      const image = document.getElementById('event-lightbox-image');
+      image.src = src;
+      image.alt = caption;
+      lightbox.style.display = 'flex';
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      document.body.style.overflow = 'hidden';
+      document.body.style.paddingRight = scrollbarWidth + 'px';
+    }
+
+    function closeEventLightbox() {
+      const lightbox = document.getElementById('event-lightbox');
+      lightbox.style.display = 'none';
+      document.body.style.overflow = 'auto';
+      document.body.style.paddingRight = '0';
+    }
+
+    document.getElementById('event-lightbox').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeEventLightbox();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeEventLightbox();
+      }
+    });
+  </script>
 </body>
 
 </html>
