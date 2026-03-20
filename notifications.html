@@ -161,6 +161,10 @@
 
         window.enableNotifications = async function() {
             try {
+                navigator.serviceWorker.register('/firebase-messaging-sw.js').catch(err => {
+                    console.log('Service worker registration failed:', err);
+                });
+                
                 const permission = await Notification.requestPermission();
 
                 if (permission !== 'granted') {
