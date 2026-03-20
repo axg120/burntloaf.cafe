@@ -145,6 +145,7 @@
         if ('serviceWorker' in navigator) {
             reg = navigator.serviceWorker.register('/firebase-messaging-sw.js').catch(err => {
                 console.log('Service worker registration failed:', err);
+                showStatus(err, 'error')
             });
             showStatus('loading sw', 'info')
             await navigator.serviceWorker.ready;
