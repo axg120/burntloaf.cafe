@@ -141,15 +141,11 @@
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
         import { getMessaging, getToken } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging.js';
 
-        let reg = null
         if ('serviceWorker' in navigator) {
-            reg = navigator.serviceWorker.register('./firebase-messaging-sw.js').catch(err => {
+            navigator.serviceWorker.register('./firebase-messaging-sw.js').catch(err => {
                 console.log('Service worker registration failed:', err);
                 showStatus(err, 'error')
             });
-            showStatus('loading sw', 'info')
-            await navigator.serviceWorker.ready;
-            showStatus('sw loaded', 'info')
         }
 
         const firebaseConfig = {
@@ -177,7 +173,6 @@
 
                 const token = await getToken(messaging, {
                     vapidKey: "BKe1tD8hKbubaPhPZHZjHGoM6KC4Z3eLjr8rWuzzjP8ppgPv5SByMSJjT5Ft6BsMd2F5nYtgsmcnjz25fNfWmYU",
-                    serviceWorkerRegistration: reg
                 });
 
                 if (token) {
