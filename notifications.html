@@ -141,10 +141,12 @@
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
         import { getMessaging, getToken } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging.js';
 
+        let reg = null
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/firebase-messaging-sw.js').catch(err => {
+            reg = navigator.serviceWorker.register('/firebase-messaging-sw.js').catch(err => {
                 console.log('Service worker registration failed:', err);
             });
+            await navigator.serviceWorker.ready;
         }
 
         const firebaseConfig = {
@@ -161,10 +163,6 @@
 
         window.enableNotifications = async function() {
             try {
-                navigator.serviceWorker.register('/firebase-messaging-sw.js').catch(err => {
-                    console.log('Service worker registration failed:', err);
-                });
-                
                 const permission = await Notification.requestPermission();
 
                 if (permission !== 'granted') {
@@ -175,7 +173,8 @@
                 showStatus('Getting device token...', 'info');
 
                 const token = await getToken(messaging, {
-                    vapidKey: "BKe1tD8hKbubaPhPZHZjHGoM6KC4Z3eLjr8rWuzzjP8ppgPv5SByMSJjT5Ft6BsMd2F5nYtgsmcnjz25fNfWmYU"
+                    vapidKey: "BKe1tD8hKbubaPhPZHZjHGoM6KC4Z3eLjr8rWuzzjP8ppgPv5SByMSJjT5Ft6BsMd2F5nYtgsmcnjz25fNfWmYU",
+                    serviceWorkerRegistration: reg
                 });
 
                 if (token) {
