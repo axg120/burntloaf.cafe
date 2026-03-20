@@ -12,3 +12,12 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
+
+self.addEventListener('push', event => {
+    const data = event.data.json();
+    const options = {
+        body: data.notification.body,
+        icon: '/assets/icon.jpeg'
+    };
+    event.waitUntil(self.registration.showNotification(data.notification.title, options));
+});
