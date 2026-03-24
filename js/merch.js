@@ -2,6 +2,15 @@
 const STORE_DISABLED = false;
 const IS_PROD = true;
 
+// Load correct Square SDK based on environment
+const scriptSrc = IS_PROD 
+  ? 'https://web.squarecdn.com/v1/square.js'
+  : 'https://sandbox.web.squarecdn.com/v1/square.js';
+const squareScript = document.createElement('script');
+squareScript.src = scriptSrc;
+squareScript.type = 'text/javascript';
+document.head.appendChild(squareScript);
+
 const SQUARE_APPLICATION_ID_SANDBOX = 'sandbox-sq0idb-J0Bx6tfRFEyaaAKmiwHmuQ';
 const SQUARE_LOCATION_ID_SANDBOX = 'LK60F9JJD2Y34';
 
