@@ -25,6 +25,13 @@
   <link rel="stylesheet" href="../css/shared.css">
   <link rel="stylesheet" href="../css/merch.css">
   <script type="text/javascript" src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
+  <script>
+    // Load correct Square SDK based on environment
+    const scriptSrc = 'https://sandbox.web.squarecdn.com/v1/square.js';
+    const script = document.createElement('script');
+    script.src = scriptSrc;
+    document.head.appendChild(script);
+  </script>
 </head>
 
 <body>
