@@ -657,8 +657,12 @@ async function processPayment(token) {
 
       const data = await response.json();
 
-      if (!response.ok || !data.success) {
+      if (!response.ok) {
         throw new Error(data.error || 'Payment failed');
+      }
+
+      if (!data.success) {
+        throw new Error(data.error || 'An issue occurred with your payment. Please try again.');
       }
 
       return data;
@@ -668,7 +672,7 @@ async function processPayment(token) {
     }
   }
 
-  throw new Error('Unable to connect to payment server');
+  throw new Error('An issue occurred with your payment. Please try again.');
 }
 
 // Generate unique idempotency key
