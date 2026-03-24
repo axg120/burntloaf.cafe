@@ -1,9 +1,17 @@
 // Square Configuration
-const SQUARE_APPLICATION_ID = 'sandbox-sq0idb-J0Bx6tfRFEyaaAKmiwHmuQ';
-const SQUARE_LOCATION_ID = 'LK60F9JJD2Y34';
+const STORE_DISABLED = false;
+const IS_PROD = true;
+
+const SQUARE_APPLICATION_ID_SANDBOX = 'sandbox-sq0idb-J0Bx6tfRFEyaaAKmiwHmuQ';
+const SQUARE_LOCATION_ID_SANDBOX = 'LK60F9JJD2Y34';
+
+const SQUARE_APPLICATION_ID_PROD = 'sq0idp-s9BdjZO1nhabTCBTm0TEOg';
+const SQUARE_LOCATION_ID_PROD = 'X3QSDKMRDNTE1';
+
+const SQUARE_APPLICATION_ID = IS_PROD ? SQUARE_APPLICATION_ID_PROD : SQUARE_APPLICATION_ID_SANDBOX;
+const SQUARE_LOCATION_ID = IS_PROD ? SQUARE_LOCATION_ID_PROD : SQUARE_LOCATION_ID_SANDBOX;
 
 // Store Configuration
-const STORE_DISABLED = true;
 
 let payments;
 let card;
@@ -452,12 +460,6 @@ async function initializeSquare() {
   try {
     payments = window.Square.payments(SQUARE_APPLICATION_ID, SQUARE_LOCATION_ID);
 
-    // Initialize Apple Pay
-    await initializeApplePay();
-
-    // Initialize Google Pay
-    await initializeGooglePay();
-
     // Initialize Card
     card = await payments.card();
     await card.attach('#card-container');
@@ -467,62 +469,6 @@ async function initializeSquare() {
     console.error('Failed to initialize Square:', e);
     document.getElementById('card-container').innerHTML = '<p style="color: red;">Error: ' + e.message + '</p>';
   }
-}
-
-// Initialize Apple Pay
-async function initializeApplePay() {
-  const paymentRequest = buildPaymentRequest();
-
-  try {
-    applePay = await payments.applePay(paymentRequest);
-    await applePay.attach('#apple-pay-container');
-    console.log('Apple Pay initialized');
-    showCardDivider();
-  } catch (e) {
-    console.log('Apple Pay not available:', e.message);
-    // Apple Pay not available on this device/browser
-  }
-}
-
-// Initialize Google Pay
-async function initializeGooglePay() {
-  const paymentRequest = buildPaymentRequest();
-
-  try {
-    googlePay = await payments.googlePay(paymentRequest);
-    await googlePay.attach('#google-pay-container');
-    console.log('Google Pay initialized');
-    showCardDivider();
-  } catch (e) {
-    console.log('Google Pay not available:', e.message);
-    // Google Pay not available on this device/browser
-  }
-}
-
-// Show "or pay with card" divider if digital wallets are available
-function showCardDivider() {
-  if (applePay || googlePay) {
-    document.getElementById('card-divider').style.display = 'block';
-  }
-}
-
-// Build payment request for Apple/Google Pay
-function buildPaymentRequest() {
-  const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const shipping = 1.00;
-  const state = document.getElementById('customer-state').value;
-  const taxRate = getTaxRate(state);
-  const tax = (subtotal + shipping) * taxRate;
-  const total = subtotal + shipping + tax;
-
-  return {
-    countryCode: 'US',
-    currencyCode: 'USD',
-    total: {
-      amount: total.toFixed(2),
-      label: 'Burntloaf Café',
-    },
-  };
 }
 
 // Open Checkout Modal
@@ -719,40 +665,6 @@ async function processPayment(token) {
 // Generate unique idempotency key
 function generateIdempotencyKey() {
   return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-}
-
-// Handle digital wallet payment (Apple Pay / Google Pay)
-async function handleDigitalWalletPayment(tokenResult) {
-  const statusContainer = document.getElementById('payment-status-container');
-
-  try {
-    if (tokenResult.status === 'OK') {
-      const paymentResult = await processPayment(tokenResult.token);
-
-      if (paymentResult.success) {
-        statusContainer.className = 'success';
-        statusContainer.textContent = 'Payment successful! Thank you for your order.';
-        statusContainer.style.display = 'block';
-
-        setTimeout(() => {
-          cart = [];
-          updateCart();
-          saveCart();
-          closeCheckout();
-          document.getElementById('cart-panel').classList.remove('open');
-        }, 2000);
-      } else {
-        throw new Error(paymentResult.error || 'Payment failed');
-      }
-    } else {
-      throw new Error('Payment tokenization failed');
-    }
-  } catch (e) {
-    console.error('Digital wallet payment error:', e);
-    statusContainer.className = 'error';
-    statusContainer.textContent = `Payment failed: ${e.message}`;
-    statusContainer.style.display = 'block';
-  }
 }
 
 // Initialize page when DOM is loaded

@@ -4,7 +4,7 @@ const API_CONFIG = {
   BASE_URL: 'https://api.burntloaf.cafe',
   
   // Fallback to localhost for development
-  FALLBACK_URL: 'http://localhost:3000',
+  FALLBACK_URL: 'https://api.burntloaf.cafe',
   
   // Determine which URL to use
   getApiUrl() {
