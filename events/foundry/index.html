@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Foundry Menu - Burntloaf Café</title>
+  <meta name="description" content="Burntloaf Café Menu for the Foundry event" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/fav3.png" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <style>
+    body {
+      background: var(--bg);
+      text-align: center;
+    }
+
+    .menu-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .menu-header {
+      margin-bottom: 8px;
+    }
+
+    .menu-header img {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      margin-bottom: 12px;
+    }
+
+    .menu-header h1 {
+      font-size: 28px;
+      color: var(--accent);
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .menu-header p {
+      color: var(--muted);
+      margin: 8px 0 0 0;
+      font-size: 16px;
+    }
+
+    .menu-image {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      display: block;
+    }
+
+    .menu-section-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 0 0 16px 0;
+      text-align: left;
+      padding-left: 4px;
+    }
+
+    .menu-section {
+      background: var(--card);
+      padding: 16px;
+      border-radius: 24px;
+      box-shadow: 0 6px 18px rgba(20, 20, 20, 0.05);
+    }
+
+    .footer-links {
+      margin-top: 12px;
+      padding: 16px;
+      font-size: 14px;
+      color: var(--muted);
+      background: none;
+      box-shadow: none;
+    }
+
+    .footer-links a {
+      color: var(--accent);
+      font-weight: 600;
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 8px 16px;
+      background: #fff0ed;
+      border-radius: 16px;
+      transition: background 0.2s;
+    }
+
+    .footer-links a:hover {
+      background: #ffe4de;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="menu-container">
+    <div class="menu-header">
+      <a href="../../">
+        <img src="../../assets/logo.png" alt="Burntloaf logo">
+      </a>
+      <h1>Event Menu</h1>
+      <p>Burntloaf Cafe @ Cambridge Foundry</p>
+    </div>
+
+    <div class="menu-section">
+      <h2 class="menu-section-title">Food</h2>
+      <img src="foundry_food.png" alt="Food Menu" class="menu-image">
+    </div>
+
+    <div class="menu-section">
+      <h2 class="menu-section-title">Drinks</h2>
+      <img src="foundry_drinks.png" alt="Drinks Menu" class="menu-image">
+    </div>
+
+    <footer class="footer-links">
+      <a href="../../">← Back to Main Site</a>
+      <div>© 2026 Burntloaf Café</div>
+    </footer>
+  </div>
+</body>
+
+</html>
