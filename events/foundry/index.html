@@ -98,6 +98,51 @@
       background: #ffe4de;
     }
 
+    /* --- Drink Cards --- */
+    .drink-cards-section {
+      background: var(--card);
+      padding: 20px 16px 24px;
+      border-radius: 24px;
+      box-shadow: 0 6px 18px rgba(20, 20, 20, 0.05);
+    }
+
+    .drink-cards-section .menu-section-title {
+      margin-bottom: 16px;
+    }
+
+    .drink-cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .drink-card {
+      border-radius: 16px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 3px 10px rgba(20, 20, 20, 0.08);
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .drink-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(20, 20, 20, 0.14);
+    }
+
+    /* First card: own row, same size as siblings, centered */
+    .drink-card:first-child {
+      grid-column: 1 / -1;
+      width: calc(50% - 6px);
+      margin: 0 auto;
+    }
+
+    .drink-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
     /* --- Featured Art --- */
     .featured-art-section {
       background: var(--card);
@@ -171,6 +216,27 @@
     <div class="menu-section">
       <h2 class="menu-section-title">Drinks</h2>
       <img src="foundry_drinks.png" alt="Drinks Menu" class="menu-image">
+    </div>
+
+    <div class="drink-cards-section">
+      <h2 class="menu-section-title">Drink Cards</h2>
+      <div class="drink-cards-grid">
+        <div class="drink-card">
+          <img src="drink1.PNG" alt="Drink 1">
+        </div>
+        <div class="drink-card">
+          <img src="drink2.PNG" alt="Drink 2">
+        </div>
+        <div class="drink-card">
+          <img src="drink3.PNG" alt="Drink 3">
+        </div>
+        <div class="drink-card">
+          <img src="drink4.PNG" alt="Drink 4">
+        </div>
+        <div class="drink-card">
+          <img src="drink5.PNG" alt="Drink 5">
+        </div>
+      </div>
     </div>
 
     <div class="featured-art-section">
