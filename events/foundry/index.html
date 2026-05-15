@@ -97,6 +97,59 @@
     .footer-links a:hover {
       background: #ffe4de;
     }
+
+    /* --- Featured Art --- */
+    .featured-art-section {
+      background: var(--card);
+      padding: 24px 20px;
+      border-radius: 24px;
+      box-shadow: 0 6px 18px rgba(20, 20, 20, 0.05);
+    }
+
+    .featured-art-section .menu-section-title {
+      margin-bottom: 20px;
+    }
+
+    .art-exhibit {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .art-piece {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 8px;
+    }
+
+    .art-piece + .art-piece {
+      border-top: 1px solid rgba(0,0,0,0.07);
+    }
+
+    .art-piece img.art-image {
+      width: 100%;
+      max-width: 480px;
+      height: auto;
+      border-radius: 10px;
+      display: block;
+      box-shadow: 0 8px 28px rgba(20, 20, 20, 0.12);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .art-piece img.art-image:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 36px rgba(20, 20, 20, 0.18);
+    }
+
+    .art-piece img.art-caption {
+      width: 100%;
+      max-width: 380px;
+      height: auto;
+      display: block;
+      margin-top: 14px;
+      opacity: 0.85;
+    }
   </style>
 </head>
 
@@ -118,6 +171,28 @@
     <div class="menu-section">
       <h2 class="menu-section-title">Drinks</h2>
       <img src="foundry_drinks.png" alt="Drinks Menu" class="menu-image">
+    </div>
+
+    <div class="featured-art-section">
+      <h2 class="menu-section-title">Featured Art</h2>
+      <div class="art-exhibit">
+
+        <div class="art-piece">
+          <img src="featured_art_1.PNG" alt="Featured Artwork 1" class="art-image">
+          <img src="featured_caption_1.PNG" alt="Caption for Artwork 1" class="art-caption">
+        </div>
+
+        <div class="art-piece">
+          <img src="featured_art_2.PNG" alt="Featured Artwork 2" class="art-image">
+          <img src="featured_caption_2.PNG" alt="Caption for Artwork 2" class="art-caption">
+        </div>
+
+        <div class="art-piece">
+          <img src="featured_art_3.PNG" alt="Featured Artwork 3" class="art-image">
+          <img src="featured_caption_3.PNG" alt="Caption for Artwork 3" class="art-caption">
+        </div>
+
+      </div>
     </div>
 
     <footer class="footer-links">
